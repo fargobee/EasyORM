@@ -129,7 +129,7 @@ class Dbcore(Dbconf):
             if affected_row>0:
                 return 'Data added !'
             else:
-                return 'Update failed !'
+                return 'Nothing to update !'
             
             cursor.close()
 
@@ -140,13 +140,13 @@ class Dbcore(Dbconf):
         lval=len(val)
         delimit=' and '
         if len(val)>0:
-            if 'limit' in val.keys():
-                lval=len(val)-1
+            #if 'limit' in val.keys():
+            #    lval=len(val)-1
             for f in val.keys():
                 num+=1
                 if f=='limit':
                     lim=val[f]
-                    num-=1
+                    #num-=1
                 
                 if num==lval:
                     delimit=''
@@ -170,7 +170,7 @@ class Dbcore(Dbconf):
         lval=len(val)
         if len(val)>0:
             if 'search' in val.keys():
-                lval=len(val)-1
+                #lval=len(val)-1
                 snum=0
                 for s in val['search'].keys():
                     snum+=1
@@ -189,8 +189,9 @@ class Dbcore(Dbconf):
                     delimit=''
 
                 if f<>'search':
-                    fieldvalue+=f+"='"+val[f]+"'"+delimit
-
+                    fieldvalue+=f+"='"+str(val[f])+"'"+delimit
+                    
+            print """update %s set %s %s;""" % (self.theentity,fieldvalue,search)
             db=self.dbConn()
             cursor=db.cursor()
             cursor.execute("""update %s set %s %s;""" % (self.theentity,fieldvalue,search))
@@ -199,7 +200,7 @@ class Dbcore(Dbconf):
             if affected_row>0:
                 return 'Data updated !'
             else:
-                return 'Update failed !'
+                return 'Nothing to update !'
             cursor.close()
 
     def delTheRow(self,val):
@@ -223,7 +224,7 @@ class Dbcore(Dbconf):
             if affected_row>0:
                 return 'Data deleted !'
             else:
-                return 'Update failed !'
+                return 'Nothing to update !'
             
             cursor.close()
 

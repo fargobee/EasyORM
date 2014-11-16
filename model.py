@@ -1,5 +1,5 @@
 import sys
-sys.path.append('D:\MyGit\easyorm\EasyORM')
+sys.path.append('path\to\your\EasyORM')
 
 from easyORM import Orm
     
